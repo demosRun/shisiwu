@@ -195,9 +195,12 @@ owo.script = {
 
       if (nowShitiAnswer[selectText]) {
         this.$target.classList.add('right');
-        this.data.okNumber += 10;
+        this.data.okNumber += 10; // 播放水滴音效
+
+        new Audio("./static/resource/DRIP07.WAV").play();
       } else {
         this.$target.classList.add('error');
+        new Audio("./static/resource/DRIP08.WAV").play();
       } // 寻找正确答案
 
 

@@ -180,8 +180,11 @@ module.exports = {
     if (nowShitiAnswer[selectText]) {
       this.$target.classList.add('right')
       this.data.okNumber += 10
+      // 播放水滴音效
+      new Audio("@|DRIP07.WAV|").play()
     } else {
       this.$target.classList.add('error')
+      new Audio("@|DRIP08.WAV|").play()
     }
     // 寻找正确答案
     let rightText = ''
