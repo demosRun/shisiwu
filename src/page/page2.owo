@@ -1,0 +1,337 @@
+<template lang="pug">
+.page2
+  img.so.so-0(src="@|73.png|")
+  img.so.so-1(src="@|543.png|" o-animation="floatUpDownSmall")
+  //- 答题进度
+  .index
+  //- 正确的水滴
+  img.shuidi(src="@|shuidi.png|")
+  .show-box
+    .show-item.show-item-1(o-tap="checkIt")
+      span 我不知道
+      .tip
+    .show-item.show-item-2(o-tap="checkIt")
+      span 我不知道
+      .tip
+    .show-item.show-item-3(o-tap="checkIt")
+      span 我应该知道
+      .tip
+    .show-item.show-item-4(o-tap="checkIt")
+      span 我可能会知道
+      .tip
+  .text 
+</template>
+<script>
+module.exports = {
+  data: {
+    shiti: [
+      {
+        title: '这是第一个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第2个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第3个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第4个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第5个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第6个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第7个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第8个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第9个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第10个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+      {
+        title: '这是第11个问题,你知道这个问题的答案是______？',
+        answer: {
+          "我不知道": true,
+          "我知道的": false,
+          "我应该知道": false,
+          "我可能会知道": false,
+        }
+      },
+    ],
+    nowShiti: {},
+    gameOver: false,
+    gameIndex: 0,
+    selectShiti: [],
+    okNumber: 0
+  },
+  created: function () {
+    this.xuanti()
+  },
+  xuanti: function () {
+    console.log('重新选题')
+    this.queryAll('.show-item').forEach(element => {
+      element.classList.remove('right-auto')
+      element.classList.remove('right')
+      element.classList.remove('error')
+    });
+    let selectNum = randomNum(0, this.data.shiti.length - 1)
+    while (this.data.selectShiti.includes(selectNum)) {
+      selectNum = randomNum(0, this.data.shiti.length - 1)
+    }
+    this.data.selectShiti.push(selectNum)
+    console.log(selectNum)
+    this.makeShiti(this.data.shiti[selectNum])
+    this.query('.show-box').classList.add('active-ani')
+    this.data.gameOver = false
+  },
+  makeShiti: function (shiti) {
+    console.log(shiti)
+    this.data.gameIndex++
+    this.data.nowShiti = shiti
+    this.query('.text').innerText = shiti.title
+    const showList = this.queryAll('.show-item span')
+    let index = 0
+    for (const key in shiti.answer) {
+      if (shiti.answer.hasOwnProperty(key)) {
+        const element = shiti.answer[key];
+        showList[index].innerText = key
+        index++
+      }
+    }
+    this.query('.index').innerText = `${this.data.gameIndex}/10`
+    
+  },
+  checkIt: function () {
+    if (this.data.gameOver) return
+    // 关掉动画
+    this.data.gameOver = true
+    this.query('.show-box').classList.remove('active-ani')
+
+    const selectText = this.$target.query('span').innerText
+    // 判断是否答对
+    const nowShitiAnswer = this.data.nowShiti.answer
+    if (nowShitiAnswer[selectText]) {
+      this.$target.classList.add('right')
+      this.data.okNumber += 10
+    } else {
+      this.$target.classList.add('error')
+    }
+    // 寻找正确答案
+    let rightText = ''
+    let rightIndex = 0
+    for (const key in nowShitiAnswer) {
+      if (nowShitiAnswer.hasOwnProperty(key)) {
+        const element = nowShitiAnswer[key];
+        if (element) {
+          rightText = key
+          break
+        } else {
+          rightIndex++
+        }
+      }
+    }
+    // 填写上正确答案
+    console.log(rightIndex)
+    this.query('.text').innerText = this.query('.text').innerText.replace('______', rightText)
+    this.queryAll('.show-item')[rightIndex].classList.add('right-auto')
+    setTimeout(() => {
+      if (this.data.gameIndex < 10) {
+        this.xuanti()
+      } else {
+        owo.go('page3//moveToLeft/moveFromRight')
+      }
+    }, 3000);
+    
+  }
+}
+</script>
+<style lang="less">
+.page2 {
+  background-image: url('@|546.jpg|');
+}
+.so-0 {
+  left: 57px;
+  top: 211px;
+  z-index: 2;
+}
+.so-1 {
+  left: 525px;
+  top: 620px;
+  z-index: 1;
+}
+.show-item {
+  width: 263px;
+  height: 263px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #306aca;
+  position: absolute;
+  span {
+    user-select: none;
+    pointer-events: none;
+    line-height: 40px;
+  }
+  .tip {
+    display: none;
+    width: 170px;
+    height: 78px;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    right: 0;
+    top: -16px;
+  }
+}
+.show-item-1 {
+  left: 115px;
+  top: 352px;
+  background-image: url('@|water1.png|');
+}
+.show-item-1.error {
+  background-image: url('@|water1-2.png|');
+}
+.show-item-2 {
+  left: 418px;
+  top: 403px;
+  background-image: url('@|water2.png|')
+}
+.show-item-2.error {
+  background-image: url('@|water2-2.png|');
+}
+.show-item-3 {
+  left: 145px;
+  top: 577px;
+  background-image: url('@|water3.png|')
+}
+.show-item-3.error {
+  background-image: url('@|water3-2.png|');
+}
+.show-item-4 {
+  left: 356px;
+  top: 697px;
+  background-image: url('@|water4.png|')
+}
+.show-item-4.error {
+  background-image: url('@|water4-2.png|');
+}
+.show-item.error {
+  .tip {
+    background-image: url('@|err-tip.png|');
+    display: block;
+  }
+}
+.show-item.right {
+  background-image: url('@|right1.png|');
+  .tip {
+    background-image: url('@|rig-tip.png|');
+    display: block;
+  }
+}
+.show-item.right-auto {
+  background-image: url('@|right2.png|');
+}
+.text {
+  position: absolute;
+  top: 980px;
+  color: #333e51;
+  font-size: 40px;
+  width: 700px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  line-height: 60px;
+  font-weight: bold;
+}
+.shuidi {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1100px;
+  margin: 0 auto;
+}
+.index {
+  position: absolute;
+  right: 50px;
+  top: 212px;
+  font-size: 42px;
+  line-height: 50px;
+  font-weight: bold;
+  color: #6643d4;
+}
+.show-box {
+  width: 100%;
+  height: 100%;
+}
+</style>

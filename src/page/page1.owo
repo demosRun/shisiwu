@@ -1,0 +1,39 @@
+<template lang="pug">
+.page-1
+  img.so.so-0(src="@|73.png|")
+  img.so.so-1(src="@|342.png|")
+  img.so.so-2(src="@|343.png|" o-animation="shrink" go="page2//moveToLeft/moveFromRight")
+  img.so.so-3(src="@|346.jpg|")
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+      console.log('ss')
+    }
+  }
+</script>
+
+
+<style lang="less">
+.so-0 {
+  left: 63px;
+  top: 237px;
+  z-index: 3;
+}
+.so-1 {
+  left: 66px;
+  top: 382px;
+  z-index: 2;
+}
+.so-2 {
+  left: 215px;
+  top: 955px;
+  z-index: 1;
+}
+.so-3 {
+  left: 0px;
+  top: 0px;
+  z-index: 0;
+}
+</style>

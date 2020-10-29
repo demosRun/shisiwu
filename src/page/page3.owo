@@ -1,0 +1,67 @@
+<template lang="pug">
+.page3
+  img.so.so-0(src="@|263.jpg|")
+  img.so.so-1(src="@|262.png|")
+  img.so.so-2(src="@|162.png|")
+  img.so.so-3(src="@|167.png|")
+  .number(font="FZZBHJW.TTF") 0123456789
+  .gold
+</template>
+<script>
+module.exports = {
+  show: function () {
+    if (owo.script.page2.data.okNumber < 100) {
+      this.query('.gold').style.backgroundImage = 'url(@|gold-2.png|)'
+    }
+    this.query('.number').innerText = owo.script.page2.data.okNumber
+  }
+}
+</script>
+<style lang="less">
+.so {
+  position: absolute;
+}
+.so-0 {
+  left: 0px;
+  top: 0px;
+  z-index: 3;
+}
+.so-1 {
+  left: 29px;
+  top: 120px;
+  z-index: 2;
+}
+.so-2 {
+  left: 103px;
+  top: 1034px;
+  z-index: 1;
+}
+.so-3 {
+  left: 411px;
+  top: 1034px;
+  z-index: 0;
+}
+.number {
+  position: absolute;
+  font-size: 120px;
+  top: 534px;
+  left: 0;
+  right: 0;
+  color: #d93234;
+  width: 100px;
+  z-index: 9;
+  line-height: 180px;
+  margin: auto;
+}
+.gold {
+  width: 67px;
+  height: 74px;
+  background-image: url('@|gold-1.png|');
+  position: absolute;
+  left: 462px;
+  top: 546px;
+  z-index: 9;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+</style>
