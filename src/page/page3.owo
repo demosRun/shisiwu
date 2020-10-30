@@ -2,18 +2,37 @@
 .page3
   img.so.so-0(src="@|263.jpg|")
   img.so.so-1(src="@|262.png|")
-  img.so.so-2(src="@|162.png|")
-  img.so.so-3(src="@|167.png|")
-  .number(font="FZZBHJW.TTF") 0123456789
+  img.so.so-2.hide-to-image(src="@|162.png|" o-tap="window.location.replace('')")
+  img.so.so-3.hide-to-image(src="@|167.png|" o-tap="owo.script.share.switchShare()")
+  .number(font="HYXuJingXingKaiJ.ttf") 0123456789
   .gold
+  img.hide-to-image.canvas-image
+  img.qr(src="@|qr.png|")
 </template>
 <script>
 module.exports = {
   show: function () {
-    if (owo.script.page2.data.okNumber < 100) {
+    if (owo.script.page2.data.okNumber == 100) {
+      this.query('.gold').style.backgroundImage = 'url(@|gold-1.png|)'
+    } else if (owo.script.page2.data.okNumber == 90) {
       this.query('.gold').style.backgroundImage = 'url(@|gold-2.png|)'
     }
     this.query('.number').innerText = owo.script.page2.data.okNumber
+  },
+  created: function () {
+    setTimeout(() => {
+      html2canvas(document.body, {
+        height: window.innerHeight,
+        ignoreElements:(element)=>{
+          console.log(element)
+          if (element.classList.contains('hide-to-image')) return true;
+          else return false
+        }
+      }).then((canvas) => {
+        let base64Img = canvas.toDataURL('image/jpg')
+        this.query('.canvas-image').src = base64Img
+      })
+    }, 1000);
   }
 }
 </script>
@@ -24,7 +43,7 @@ module.exports = {
 .so-0 {
   left: 0px;
   top: 0px;
-  z-index: 3;
+  z-index: 0;
 }
 .so-1 {
   left: 29px;
@@ -34,34 +53,51 @@ module.exports = {
 .so-2 {
   left: 103px;
   top: 1034px;
-  z-index: 1;
+  z-index: 1999;
 }
 .so-3 {
   left: 411px;
   top: 1034px;
-  z-index: 0;
+  z-index: 1999;
 }
 .number {
   position: absolute;
-  font-size: 120px;
-  top: 534px;
+  font-size: 165px;
+  top: 520px;
   left: 0;
   right: 0;
   color: #d93234;
-  width: 100px;
+  width: 300px;
   z-index: 9;
   line-height: 180px;
   margin: auto;
+  text-align: center;
 }
 .gold {
   width: 67px;
   height: 74px;
   background-image: url('@|gold-1.png|');
   position: absolute;
-  left: 462px;
+  left: 510px;
   top: 546px;
   z-index: 9;
   background-repeat: no-repeat;
   background-position: center;
+}
+.canvas-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  opacity: 0;
+}
+.qr {
+  position: absolute;
+  left: -1px;
+  right: 0;
+  z-index: 9;
+  top: 770px;
+  width: 151px;
+  margin: 0 auto;
 }
 </style>

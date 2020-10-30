@@ -37,9 +37,9 @@ module.exports = {
       {
         title: '这是第2个问题,你知道这个问题的答案是______？',
         answer: {
-          "我不知道": true,
           "我知道的": false,
           "我应该知道": false,
+          "我不知道": true,
           "我可能会知道": false,
         }
       },
@@ -55,8 +55,8 @@ module.exports = {
       {
         title: '这是第4个问题,你知道这个问题的答案是______？',
         answer: {
-          "我不知道": true,
           "我知道的": false,
+          "我不知道": true,
           "我应该知道": false,
           "我可能会知道": false,
         }
@@ -82,9 +82,9 @@ module.exports = {
       {
         title: '这是第7个问题,你知道这个问题的答案是______？',
         answer: {
-          "我不知道": true,
           "我知道的": false,
           "我应该知道": false,
+          "我不知道": true,
           "我可能会知道": false,
         }
       },
@@ -186,6 +186,11 @@ module.exports = {
       this.$target.classList.add('error')
       new Audio("@|DRIP08.WAV|").play()
     }
+    this.query('.shuidi').classList.add('shuidi-ani')
+    // 水滴效果
+    setTimeout(() => {
+      this.query('.shuidi').classList.remove('shuidi-ani')
+    }, 2000);
     // 寻找正确答案
     let rightText = ''
     let rightIndex = 0
@@ -321,8 +326,9 @@ module.exports = {
   position: absolute;
   left: 0;
   right: 0;
-  top: 1100px;
+  top: 1128px;
   margin: 0 auto;
+  opacity: 0;
 }
 .index {
   position: absolute;

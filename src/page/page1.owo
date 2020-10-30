@@ -9,7 +9,7 @@
 <script>
   module.exports = {
     created: function () {
-      console.log('ss')
+      owo.animate('zoomIn', this.query('.so-1'), 500)
     }
   }
 </script>
